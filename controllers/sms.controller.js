@@ -1,7 +1,4 @@
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-
-const client = require("twilio")(accountSid, authToken);
+const { client } = require("../configs/twillio");
 
 module.exports.send = async function (req, res) {
   const { recipents, body } = req.body;
@@ -17,7 +14,7 @@ module.exports.send = async function (req, res) {
     })
   )
     .then((messages) => {
-      console.log(messages);
+      return res.json({messages})
     })
     .catch((err) => {
       return res.status(500).json({ error: err.code });

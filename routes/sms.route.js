@@ -4,6 +4,6 @@ const router = express.Router();
 
 const controller = require('../controllers/sms.controller');
 
-router.post('/', controller.send);
+router.get('/', controller.send);
 
 module.exports = router;
