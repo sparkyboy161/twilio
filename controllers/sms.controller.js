@@ -2,21 +2,19 @@ const { client } = require("../configs/twillio");
 
 module.exports.send = async function (req, res) {
   const { recipents, body } = req.body;
-  //   const messages = [];
+  const messages = [];
 
-  Promise.all(
-    recipents.map((recipent) => {
-      return client.messages.create({
-        to: recipent,
+  try {
+    for (recipent of recipents) {
+      const message = await client.messages.create({
+        body,
         from: process.env.TWILIO_MESSAGING_SERVICE_SID,
-        body: body,
+        to: recipent,
       });
-    })
-  )
-    .then((messages) => {
-      return res.json({messages})
-    })
-    .catch((err) => {
-      return res.status(500).json({ error: err.code });
-    });
+      messages.push(message);
+    }
+    return res.json({ messages });
+  } catch (err) {
+    return res.status.json({ errors: err });
+  }
 };
