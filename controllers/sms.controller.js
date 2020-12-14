@@ -11,10 +11,11 @@ module.exports.send = async function (req, res) {
         from: process.env.TWILIO_MESSAGING_SERVICE_SID,
         to: recipent,
       });
+      console.log(message)
       messages.push(message);
     }
     return res.json({ messages });
   } catch (err) {
-    return res.status.json({ errors: err });
+    return res.status(500).json({ errors: err });
   }
 };
