@@ -16,6 +16,7 @@ module.exports.send = async function (req, res) {
     }
     return res.json({ messages });
   } catch (err) {
+    console.log('testttte');
     return res.status(500).json({ errors: err });
   }
 };
